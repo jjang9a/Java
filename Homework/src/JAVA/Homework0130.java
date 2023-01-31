@@ -107,7 +107,7 @@ public class Homework0130 {
 		int gugu = Integer.parseInt(scanner.nextLine());
 		for(int i=1; i<=gugu; i++) {
 			for(int j=1; j<=gugu; j++) {
-				if(i==9 || j==9 || (i*j)/10==9 || i*j-((i*j/10)*10)==9) {
+				if(i==9 || j==9 || (i*j)/10==9 || (i*j)%10==9) {
 					System.out.print(j+"*"+i+"="+i*j+"\t");
 				}else {
 					System.out.print(j+"*"+i+"=9\t");
