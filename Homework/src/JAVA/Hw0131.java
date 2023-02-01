@@ -56,7 +56,7 @@ public class Hw0131 {
 						System.out.print(arr2[i]+" ");
 					}
 				}
-				
+				System.out.println();
 	
 				// 추가 문제]
 				// answer 배열에 담긴 데이터를 읽고 각 숫자마다 개수만큼'*'를 찍는다.
@@ -66,15 +66,22 @@ public class Hw0131 {
 				int[] counter = new int[4];
 		
 				for (int i = 0; i < answer.length; i++) {
-					if(answer[i] == i+1) {
-						counter[i] ++;
-					}
+					//answer의 숫자의 갯수 -> counter 인덱스 매칭
+					//answer에서 데이터(값)이 나왔을 떄 -> counter의 인덱스로 바꾼다
+					//answer -> 1
+					//counter[0] = counter[0]+1;
+					//answer -> 4
+					//counter[3] = counter[3]+1;
+					counter[answer[i]-1]++;
 				}
+				//counter 배열의 크기 만큼
 				for (int i = 0; i < counter.length; i++) {
-					
+					//counter[0] =answer에서 숫자 1의 갯수 = 3
+					for(int j=0; j<counter[i]; j++) {
+						System.out.print("*");
+					}
+					System.out.println();
 				}
-				System.out.println();
-				
-	
+
 	}
 }
