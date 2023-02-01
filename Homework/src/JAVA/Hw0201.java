@@ -16,9 +16,61 @@ public class Hw0201 {
 		
 		Scanner sc = new Scanner(System.in);
 		
-		//상품 수
 		int iCount = 0;
-		//상품 정보 보관 배열
 		Item iArr[] = null;
+		boolean run = true;
+		
+		while(run) {
+			System.out.println("1.상품 수 | 2.상품 및 가격입력 | 3.제품별 가격 | 4.분석 | 5.종료");
+			System.out.println("입력>");
+			int num = Integer.parseInt(sc.nextLine());
+			
+			if(num == 1) {
+				System.out.println("상품의 수를 입력하세요>");
+				iCount = Integer.parseInt(sc.nextLine());
+				
+			}else if(num == 2) {
+				iArr = new Item[iCount];
+				
+				for(int i=0; i<iArr.length; i++) {
+					iArr[i] = new Item();
+					
+					System.out.println("상품명>");
+					iArr[i].name = sc.nextLine();
+					
+					System.out.println("가격>");
+					iArr[i].price = Integer.parseInt(sc.nextLine());
+				}
+				
+			}else if(num == 3) {
+				for(int i=0; i<iArr.length; i++) {
+					System.out.println(iArr[i].name+" : "+iArr[i].price+"원");
+				}
+				
+			}else if(num == 4) {
+				// 최고 가격을 가지는 제품과 해당 제품을 제외한 제품들의 총 합을 구하는 프로그램을 작성하세요.
+				int max = iArr[0].price;
+				int maxIn = 0;
+				int sum = 0;
+				for(int i=0; i<iArr.length; i++){
+					if(iArr[i].price > max) {
+						max = iArr[i].price;
+						maxIn = i;
+					}
+				}
+				for(int i=0; i<iArr.length; i++){
+					if(i != maxIn) {
+						sum += iArr[i].price;
+					}
+				}
+				System.out.println("최고가의 제품은 "+iArr[maxIn].name+"이고, 그 외 제품가의 총 합은 "+sum+"원 입니다.");
+				
+			}else if(num == 5) {
+				System.out.println("프로그램 종료");
+				run = false;
+			}
+			
+		}
 	}
 }
+
