@@ -34,12 +34,13 @@ public class Hw0201 {
 				
 				for(int i=0; i<iArr.length; i++) {
 					iArr[i] = new Item();
-					
+					System.out.println("==============");
 					System.out.println("상품명>");
 					iArr[i].name = sc.nextLine();
 					
 					System.out.println("가격>");
 					iArr[i].price = Integer.parseInt(sc.nextLine());
+					System.out.println("==============");
 				}
 				
 			}else if(num == 3) {
@@ -52,7 +53,7 @@ public class Hw0201 {
 				int max = iArr[0].price;
 				int maxIn = 0;
 				int sum = 0;
-				for(int i=0; i<iArr.length; i++){
+				for(int i=1; i<iArr.length; i++){
 					if(iArr[i].price > max) {
 						max = iArr[i].price;
 						maxIn = i;
