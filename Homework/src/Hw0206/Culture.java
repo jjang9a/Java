@@ -26,15 +26,15 @@ public abstract class Culture {
 		String grade = null;
 		int aScore = 0;
 		aScore = score/cusNum;
-		if(aScore==5) {
+		if(aScore>=4) {
 			grade = "☆☆☆☆☆";
-		}else if(aScore>=4) {
-			grade = "☆☆☆☆";
 		}else if(aScore>=3) {
-			grade = "☆☆☆";
+			grade = "☆☆☆☆";
 		}else if(aScore>=2) {
-			grade = "☆☆";
+			grade = "☆☆☆";
 		}else if(aScore>=1) {
+			grade = "☆☆";
+		}else{
 			grade = "☆";
 		}
 		return grade;
