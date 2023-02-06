@@ -6,10 +6,11 @@ public class Human {
 //	(1) public void getInformation() : 이름, 키와 몸무게를 출력하는 기능
 	
 	//필드
-	String name;
-	int height;
-	int weight;
+	protected String name;
+	protected int height;
+	protected int weight;
 	
+
 	//생성자
 	Human(String name, int height, int weight){
 		this.name = name;
@@ -19,7 +20,7 @@ public class Human {
 	
 	//메소드
 	public void getInformation() {
-		System.out.println("이름 : "+name+", 키 : "+height+"cm, 몸무게 : "+weight+"kg");
+		System.out.print("이름 : "+name+"\t키 : "+height+"cm\t몸무게 : "+weight+"kg");
 	}
 	
 }

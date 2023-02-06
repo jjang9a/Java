@@ -16,6 +16,7 @@ public class StandardWeightInfo extends Human{
 
 	@Override
 	public void getInformation() {
-		System.out.println("이름 : "+name+", 키 : "+height+"cm, 몸무게 : "+weight+"kg, 표준체중은 "+getStandardWeight()+"입니다.");
+		super.getInformation();
+		System.out.println("\t표준체중은 "+getStandardWeight()+"입니다.");
 	}
 }

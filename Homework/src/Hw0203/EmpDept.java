@@ -17,7 +17,8 @@ public class EmpDept extends Employee{
 
 	@Override
 	public void getInformation() {
-		System.out.println("이름 : "+name+", 연봉 : "+earn+", 부서 : "+part);
+		super.getInformation();
+		System.out.println("\t부서 : "+part);
 	}
 
 	@Override

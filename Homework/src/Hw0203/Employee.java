@@ -20,7 +20,7 @@ public class Employee {
 	}
 	
 	public void getInformation() {
-		System.out.println("이름 : "+name+", 연봉 : "+earn);
+		System.out.print("이름 : "+name+"\t연봉 : "+earn);
 	}
 	
 	public void print() {
