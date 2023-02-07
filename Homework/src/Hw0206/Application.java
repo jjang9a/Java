@@ -27,7 +27,7 @@ public class Application {
 		
 		
 		System.out.println("\n<<<2번>>>");
-		Keypad rpg = new RPGgame(0);
+		Keypad rpg = new RPGgame();
 
 		rpg.leftUpButton();
 		rpg.rightUpButton();

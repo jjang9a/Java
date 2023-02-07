@@ -6,8 +6,8 @@ public class RPGgame implements Keypad{
 	int mode;
 	
 	//생성자
-	public RPGgame(int mode) {
-		this.mode = mode;
+	public RPGgame() {
+		mode = Keypad.NORMAL_MODE;
 		System.out.println("RPGgmae 실행");
 	}
 	
