@@ -69,7 +69,7 @@ public class Hw0207 {
 		
 		int fir = test3.indexOf(str1);
 		int sec = test3.indexOf(str2);
-		System.out.println("두 문자간의 거리 : "+Math.abs(fir-sec));
+		System.out.println("두 문자간의 거리 : "+Math.abs(fir-sec-1));
 		System.out.println("-------------------------------");
 		
 //		//4) 중복문자 제거
