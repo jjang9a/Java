@@ -37,6 +37,9 @@ public class Hw0207 {
 		String test2 = sc.nextLine().toLowerCase();
 //		String test2 = "1a2b3c4d 5e";
 //		System.out.println("입력> 1a2b3c4d 5e");
+		
+		//방법1
+		
 		byte[] byte1 = test2.getBytes();
 		int str = 0;
 		int num = 0;
@@ -54,6 +57,28 @@ public class Hw0207 {
 		}
 		System.out.println("출력> 문자 : "+str+"개, 숫자 : "+num+"개, 공백 : "+blank+"개");
 		
+		
+		//방법2
+		
+		System.out.println("입력>");
+		String stri = sc.nextLine();
+		int space = 0;
+		int numb = 0;
+		int cha = 0;
+		
+		for (int i = 0; i < stri.length(); i++) {
+			char tempStr = stri.charAt(i);
+	
+			if (tempStr == 32) {
+				space++;
+			} else if (tempStr >= 48 && tempStr <= 57) {
+				num++;
+			} else if (tempStr >= 97 && tempStr <= 122) {
+				cha++;
+			}
+		}
+		System.out.println("숫자 : " + numb + "개, 문자 : " + cha + "개, 공백 : " + space);
+		
 
 //		//3) 중복되는 문자가 없는 문자열에서 두 문자사이의 거리 구하기
 
@@ -69,12 +94,18 @@ public class Hw0207 {
 		
 		int fir = test3.indexOf(str1);
 		int sec = test3.indexOf(str2);
-		System.out.println("두 문자간의 거리 : "+Math.abs(fir-sec-1));
+		System.out.println("두 문자간의 거리 : "+Math.abs(fir-sec));
 		System.out.println("-------------------------------");
 		
 //		//4) 중복문자 제거
 //		입력 : aaabbccceedddd
 //		출력 : abcd
+		
+		
+		//indexOf(a) -> a의 위치 -> index -> 0
+		//indexOf(charAt(i)) == i
+		//같은 값이 여러개면 그 값이 최초로 등장하는 위치를 찍어줌
+		//두번째 줄 식의 값이 같다고 하면 최초로 등장, 다르면 이미 앞에서 같은문자가 나왔었다는 의미
 		
 		System.out.println("\n<<<4번>>>");
 //		System.out.print("입력> ");
@@ -83,12 +114,22 @@ public class Hw0207 {
 		System.out.println("입력> aaabbccceedddd");
 		
 		StringBuilder sb = new StringBuilder();
-
+		
+		//방법1
 		for(int i=0; i<test4.length(); i++) {
 			String aaa = String.valueOf(test4.charAt(i));
 			if(sb.indexOf(aaa) == -1) {sb.append(aaa);}
 		}
 		
+		System.out.println("출력> "+sb);
+		
+		//방법2
+		for(int i=0; i<test4.length(); i++) {
+			if(test4.indexOf(test4.charAt(i)) == i) {
+				sb.append(test4.charAt(i));
+			}
+		}
+
 		System.out.println("출력> "+sb);
 
 	}
