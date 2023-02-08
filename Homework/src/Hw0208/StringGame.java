@@ -1,31 +1,73 @@
 package Hw0208;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class StringGame {
 	//필드
 	char charData;
 	String strData;
+	List<Character> word = new ArrayList<>();
+	String str = null;
+	String tryStr = "";
 		
 	//생성자
 	public StringGame(){
-			
 	}
 		
 	//메소드
 	public void setCharData(char charData) {
 		this.charData = charData;
+		if(word.contains(charData)) {
+			System.out.println("문자열을 구성하는 문자입니다.");
+			tryStr += charData;
+		}else {
+			System.out.println("문자열을 구성하는 문자가 아닙니다.");
+		}
 	}
 
 	public void setStrData(String strData) {
 		this.strData = strData;
+		if(strData.equals(str)) {
+			System.out.println("정답입니다.");
+		}else {
+			for (int i = 0; i < word.size(); i++) {
+				if(word.get(i) == strData.charAt(i)) {
+					System.out.print('O');
+				}else {
+					System.out.print('X');
+				}
+			}
+			System.out.println();
+		}
 	}
 	
 	public void showCharData() {
-		
+		System.out.println("현재까지 확인된 문자열의 문자들은 다음과 같습니다.");
+		System.out.println(tryStr);
 	}
 	public void init() {
-		
+		word.clear();
+		tryStr = "";
+		int random = (int)(Math.random()*4+1);
+		switch(random) {
+		case 1 :
+			str = "orange";
+			break;
+		case 2 :
+			str = "game";
+			break;
+		case 3 :
+			str = "phone";
+			break;
+		case 4 :
+			str = "smart";
+			break;
+		}
+		for(int i=0; i<str.length(); i++) {
+			word.add(str.charAt(i));
+		}
 	}
 	
 	
@@ -49,6 +91,8 @@ public class StringGame {
 		boolean run = true;
 		StringGame game = new StringGame();
 		
+		game.init();
+		
 		while(run) {
 			System.out.println("---------------------------------------------");
 			System.out.println(" 1.문자하나 | 2.단어 | 3.입력내역 | 4.새 게임 | 5.종료 ");
@@ -57,10 +101,24 @@ public class StringGame {
 			
 			switch(menu) {
 			case 1:
-//				game.setCharData();
-//				break;
-//			case 2:
-//				game.setStrData();
+				game.showCharData();
+				if(game.tryStr.length() == game.word.size()) {
+					System.out.println("문자열을 구성하는 문자를 다 입력하셨습니다.");
+				}else {
+					System.out.print("입력 값>> ");
+					char one = sc.next().charAt(0);		
+					game.setCharData(one);
+				}
+				break;
+			case 2:
+				game.showCharData();
+				System.out.print("입력 값>> ");
+				String two = sc.next();
+				if(two.length() != game.str.length()){
+					System.out.println("\n입력된 문자열의 길이가 정답과 다릅니다.");
+				}else {
+					game.setStrData(two);
+				}
 				break;
 			case 3:
 				game.showCharData();
