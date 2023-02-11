@@ -29,43 +29,45 @@ public class Lotto {
 				System.out.println("금액을 투입해주세요.");
 				money = Integer.parseInt(sc.nextLine());
 				int[] lotto;
-				for(int i=0; i<money/1000; i++) {
+				for(int k=0; k<money/1000; k++) {
 					lotto = new int[6];
-					int lottoNum = (int)(Math.random()*45)+1;
-					lotto[i] = lottoNum;
-//					while(true) {
-//						int lottoNum = (int)(Math.random()*45)+1;
-//						for(int j=0; j<lotto.length; j++) {
-//							if(lotto[j] == lottoNum) {
-//								continue;
-//							}else {
-//								lotto[i] = lottoNum;
-//								break;
-//							}
-//						}
-					list.add(lotto);
+					for(int i=0; i<lotto.length; i++) {
+						int num = (int)(Math.random()*45)+1;
+						lotto[i] = num;
+						for(int j=0; j<i; j++) {
+							if(lotto[i] == lotto[j]) {
+								i--;
+								break;
+							}
+						}
 					}
-				
-
+					list.add(lotto);
+				}
 				System.out.println("번호 출력 완료");
 				break;
+				
 			case 2 :
 				System.out.println("구매 한 금액> "+money+"월");
 				for(int i=0; i<list.size(); i++) {
-					System.out.print((i+1)+"번> ");
+					System.out.print((i%5)+1+"번> ");
 					for(int j=0; j<6; j++) {
-					System.out.print(list.get(i)[j]+' ');
+						System.out.print(list.get(i)[j]+" ");
 					}
 					System.out.println();
+					if((i%5)==4) {
+						System.out.println("----------------------");
+					}
 				}
 				break;
+				
 			case 99 :
 				System.out.println("프로그램 종료");
 				run = false;
 				break;
+				
 			default :
 				System.out.println("1, 2, 99 중 하나를 입력해주세요");
-			
+				break;
 			}
 		}
 		
