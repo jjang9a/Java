@@ -12,10 +12,24 @@ public class StringAPI {
 //	문제 1] 문자열 압축
 //예시 : 입력 >"YYYEEDDDYYYMMMAAA";
 //       출력 >Y3E2D3Y3M3A3
+		
+		System.out.print("입력> ");
+		String num1 = sc.nextLine();
+		String result = num1.substring(0,1);
+		int count = 1;
+		
+		for(int i=0; i<num1.length()-1; i++) {
+			if(num1.charAt(i) == num1.charAt(i+1)) {
+				count++;
+			}else {
+				result += String.valueOf(count);
+				result += num1.charAt(i+1);
+				count = 1;
+			}
+		}
+		result += String.valueOf(count);
+		System.out.println(result);
 
-		
-		
-		
 		
 		
 //문제 2] 생년월일 입력 후 나이 출력하기(220101 -> 2022년생, 230202 -> 1923년생)
