@@ -10,13 +10,13 @@ public class EmployeesService {
 	Scanner sc = new Scanner(System.in);
 	
 	//모든 사원 조회
-	public void getDepartmentsList(){
+	public void getEmployeesList(){
 		List<Employees> list = EmployeesDAO.getInstance().getEmployeesList();
 		System.out.println("==================================");
 		for(int i=0; i<list.size(); i++) {
 			System.out.println("사원 번호 : "+list.get(i).getEmployeeId());
 			System.out.println("사원 이름 : "+list.get(i).getFirstName());
-			System.out.println("직   업 : "+list.get(i).getJobId());
+			System.out.println("직   책 : "+list.get(i).getJobId());
 			System.out.println("월   급 : "+list.get(i).getSalary());
 			System.out.println("==================================");
 		}
@@ -32,7 +32,7 @@ public class EmployeesService {
 		}else {
 			System.out.println("사원 번호 : "+emp.getEmployeeId());
 			System.out.println("사원 이름 : "+emp.getFirstName());
-			System.out.println("직   업 : "+emp.getJobId());
+			System.out.println("직   책 : "+emp.getJobId());
 			System.out.println("월   급 : "+emp.getSalary());
 		}
 	}
@@ -56,7 +56,7 @@ public class EmployeesService {
 	}
 	
 	//수정
-	public void modifyDept() {
+	public void modifyEmp() {
 		System.out.println("==============사원 수정==============");
 		System.out.println("수정 사원 번호 > ");
 		int deptNo = Integer.parseInt(sc.nextLine());
@@ -77,6 +77,29 @@ public class EmployeesService {
 	}
 	
 	//등록
-	
-	
+	public void insertEmp() {
+		System.out.println("==============사원 등록==============");
+		System.out.println("사원 번호 > ");
+		int empNo = Integer.parseInt(sc.nextLine());
+		System.out.println("사원 이름 > ");
+		String empName = sc.nextLine();
+		System.out.println("직책 > ");
+		String job = sc.nextLine();
+		System.out.println("월급 > ");
+		int sal = Integer.parseInt(sc.nextLine());
+		
+		Employees emp = new Employees();
+		emp.setEmployeeId(empNo);
+		emp.setFirstName(empName);
+		emp.setJobId(job);
+		emp.setSalary(sal);
+		
+		int result = EmployeesDAO.getInstance().insertEmp(emp);
+		
+		if(result > 0) {
+			System.out.println("사원 등록 완료");
+		}else {
+			System.out.println("사원 등록 실패");
+		}
+	}
 }

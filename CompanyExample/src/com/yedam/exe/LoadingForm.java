@@ -24,6 +24,7 @@ public class LoadingForm {
 				break;
 			case 2 :
 				//사원 관련 프로그램 메뉴 출력
+				employees();
 				break;
 			case 3 :
 				System.out.println("end og prog");
@@ -91,19 +92,19 @@ public class LoadingForm {
 		
 			switch(employeeMenu) {
 			case 1 : 
-				
+				es.getEmployeesList();
 				break;
 			case 2 : 
-				
+				es.getEmployee();
 				break;
 			case 3 : 
-				
+				es.deleteEmp();
 				break;
 			case 4 : 
-				
+				es.modifyEmp();
 				break;
 			case 5 : 
-				
+				es.insertEmp();
 				break;
 			case 6 : 
 				System.out.println("프로그램 종료");

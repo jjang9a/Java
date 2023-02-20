@@ -116,6 +116,25 @@ public class EmployeesDAO extends DAO{
 	}
 	
 	//등록
+	public int insertEmp(Employees emp) {
+		int result = 0;
+		try {
+			conn();
+			String sql = "insert into emp values (?,?,?,?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, emp.getEmployeeId());
+			pstmt.setString(2, emp.getFirstName());
+			pstmt.setString(3, emp.getJobId());
+			pstmt.setInt(4, emp.getSalary());
+			result = pstmt.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			disconn();
+		}
+		return result;
+	}
+	
 	
 	
 }
