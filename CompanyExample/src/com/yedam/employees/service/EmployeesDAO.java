@@ -35,7 +35,9 @@ public class EmployeesDAO extends DAO{
 			while(rs.next()) {
 				emp = new Employees();
 				emp.setEmployeeId(rs.getInt("employee_id"));
-				emp.setFirstName(rs.getString("first_name"));
+				emp.setLastName(rs.getString("last_name"));
+				emp.setEmail(rs.getString("email"));
+				emp.setHireDate(rs.getDate("hire_date"));
 				emp.setJobId(rs.getString("job_id"));
 				emp.setSalary(rs.getInt("salary"));
 				
@@ -64,7 +66,9 @@ public class EmployeesDAO extends DAO{
 			if(rs.next()) {
 				emp = new Employees();
 				emp.setEmployeeId(rs.getInt("employee_id"));
-				emp.setFirstName(rs.getString("first_name"));
+				emp.setLastName(rs.getString("last_name"));
+				emp.setEmail(rs.getString("email"));
+				emp.setHireDate(rs.getDate("hire_date"));
 				emp.setJobId(rs.getString("job_id"));
 				emp.setSalary(rs.getInt("salary"));
 			}
@@ -120,12 +124,14 @@ public class EmployeesDAO extends DAO{
 		int result = 0;
 		try {
 			conn();
-			String sql = "insert into emp values (?,?,?,?)";
+			String sql = "insert into emp values (?,?,?,sysdate,?,?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, emp.getEmployeeId());
-			pstmt.setString(2, emp.getFirstName());
-			pstmt.setString(3, emp.getJobId());
-			pstmt.setInt(4, emp.getSalary());
+			pstmt.setString(2, emp.getLastName());
+			pstmt.setString(3, emp.getEmail());
+//			pstmt.setDate(4, emp.getHireDate());
+			pstmt.setString(4, emp.getJobId());
+			pstmt.setInt(5, emp.getSalary());
 			result = pstmt.executeUpdate();
 		}catch(Exception e) {
 			e.printStackTrace();
