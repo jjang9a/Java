@@ -46,6 +46,13 @@ public class Club {
 	public void setcAge(int cAge) {
 		this.cAge = cAge;
 	}
+	@Override
+	public String toString() {
+		return "Club [cId=" + cId + ", cName=" + cName + ", cDate=" + cDate + ", cMail=" + cMail + ", cAge=" + cAge
+				+ "]";
+	}
 	
-
+	
+	
+	
 }

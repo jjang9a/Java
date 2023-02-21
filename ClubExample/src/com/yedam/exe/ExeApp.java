@@ -7,7 +7,7 @@ import com.yedam.club.ClubService;
 public class ExeApp {
 
 	private ClubService cs = new ClubService();
-	private String menu = null;
+	private int menu = 0;
 	private Scanner sc = new Scanner(System.in);
 	private boolean run = true;
 	
@@ -30,18 +30,44 @@ public class ExeApp {
 	
 	private void loginMenu() {
 		System.out.println("*** 관리자 시스템 메뉴 ***");
-		System.out.println("1.신규 등록 | 2.회원 조회 | 3.아이디 조회 | 4.이메일 변경 | 5. 강제탈퇴 \n");
+		System.out.println("1.신규 등록 | 2.회원 조회 | 3.아이디 조회 | 4.이메일 변경 | 5.강제탈퇴 | 6.로그아웃\n");
 		System.out.println("입력 > ");
-		menu = sc.nextLine();
+		menu = Integer.parseInt(sc.nextLine());
 		
+		switch(menu) {
+		case 1 :
+			//신규 등록
+			cs.insertClub();
+			break;
+		case 2 :
+			//회원 조회
+			cs.getClubList();
+			break;
+		case 3 :
+			//아이디로 조회
+			cs.getClub();
+			break;
+		case 4 :
+			//이메일 변경
+			cs.updateClub();
+			break;
+		case 5 :
+			//강제 탈퇴
+			cs.deleteClub();
+			break;
+		case 6 :
+			//로그아웃
+			cs.loguot();
+			break;
+		}
 	}
 	private void logoutMenu() {
 		System.out.println("1. 로그인 | 2. 종료");
 		System.out.println("입력 > ");
-		menu = sc.nextLine();
-		if(menu.equals("1")) {
+		menu = Integer.parseInt(sc.nextLine());
+		if(menu == 1) {
 			cs.login();
-		}else if(menu.equals("2")) {
+		}else if(menu == 2) {
 			run = false;
 			System.out.println("프로그램 종료");
 		}
