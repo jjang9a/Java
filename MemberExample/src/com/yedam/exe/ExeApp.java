@@ -10,7 +10,6 @@ public class ExeApp {
 	Scanner sc = new Scanner(System.in);
 	String menu = "";
 	boolean run = true;
-	
 	public ExeApp() {
 		run();
 	}
