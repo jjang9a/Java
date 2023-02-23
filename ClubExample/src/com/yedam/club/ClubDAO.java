@@ -65,7 +65,7 @@ public class ClubDAO extends DAO{
 		}
 		return result;
 	}
-		
+	 
 	//모든 회원 조회 (가입일순)
 	public List<Club> getClubList(){
 		List<Club> list = new ArrayList<>();

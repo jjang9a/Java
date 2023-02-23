@@ -71,6 +71,6 @@ public class ExeApp {
 			run = false;
 			System.out.println("프로그램 종료");
 		}
-	}
+	} 
 	
 }
