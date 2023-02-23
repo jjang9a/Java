@@ -22,7 +22,7 @@ public class ClubService {
 			System.out.println("관리자가 아닙니다.");
 		}
 	}
-	 
+	
 	//새 회원 등록
 	public void insertClub() {
 		Club c = new Club();
