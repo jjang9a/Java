@@ -53,25 +53,35 @@ public class ExeApp {
 		menu = Integer.parseInt(sc.nextLine());
 		if(menu == 1) {
 			System.out.println("관리자 모드로 진입하셨습니다");
-			System.out.println("1.전체 회원 정보 | 2.회원 조회 | 3.회원 등급 조정 | 4.강제탈퇴 | 5.글, 댓글 삭제 | 6.일반모드로 전환");
+			System.out.println("1.건의게시판 | 2.회원 조회 | 3.회원 정보 수정 | 4. 글, 댓글 수정 | 5.글, 댓글 삭제 | 6.강제탈퇴 | 7.일반모드로 전환");
 			System.out.println("입력 >");
 			int sel = Integer.parseInt(sc.nextLine());
 			
 			switch(sel) {
 			case 1 :
-				//전체 회원 정보
-				us.getUserList();
-				break;
-			case 2 :
-				//기준 조건에 맞는 회원 조회(order by ?)
+				//건의 게시판
+				//글 읽기, 댓글 달기
 				
 				break;
+			case 2 :
+				//회원정보 조회
+				//1. 전체 회원 조회
+				//2. 기준 조건에 맞는 회원 조회(order by ?)
+				System.out.println("1.전체 회원 조회 | 2.특정 회원 조회");
+				System.out.println("입력 > ");
+				int select = Integer.parseInt(sc.nextLine());
+				if(select == 1) {
+					us.getUserList();
+				}else {
+					us.getUser();
+				}
+				break;
 			case 3 :
-				//회원 등급 조정
+				//회원 정보 수정
 				
 				break;
 			case 4 :
-				//강제 탈퇴
+				//글, 댓글 수정
 			
 				break;
 			case 5 : 
@@ -79,6 +89,10 @@ public class ExeApp {
 				
 				break;
 			case 6 :
+				//강제 탈퇴
+				
+				break;
+			case 7 :
 				//일반모드로 전환
 				loginMenu();
 				break;
@@ -91,11 +105,46 @@ public class ExeApp {
 	}
 
 	private void loginMenu() {
-		System.out.println("일반모드");
+		System.out.println("1.맛집 등록 게시판 | 2.우리동네맛집 | 3.메뉴검색 | 4.익명자유게시판 | 5.레시피게시판 | 6.건의게시판 | 7.마이페이지 | 8.명예의전당 | 9.로그아웃");
 		System.out.println("입력 > ");
 		menu = Integer.parseInt(sc.nextLine());
-		if(menu == 6) {
+		switch(menu) {
+		case 1 :
+			//맛집 등록 게시판
+			
+			break;
+		case 2 :
+			//우리동네 맛집
+			
+			break;
+		case 3 : 
+			//메뉴 검색
+			
+			break;
+		case 4 :
+			//익명 자유게시판
+			
+			break;
+		case 5 : 
+			//레시피 게시판
+			
+			break;
+		case 6 :
+			//건의 게시판
+			
+			break;
+		case 7 :
+			//마이페이지
+			us.myPage();
+			break;
+		case 8 : 
+			//명예의 전당
+			
+			break;
+		case 9 :
+			//로그아웃
 			us.loguot();
+			break;
 		}
 	}
 }
