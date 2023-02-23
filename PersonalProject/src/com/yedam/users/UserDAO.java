@@ -186,6 +186,8 @@ public class UserDAO extends DAO{
 					pstmt.setString(1, u.getuGrade());
 				}else if(kind.equals("u_pw")) {
 					pstmt.setString(1, u.getuPw());
+				}else if(kind.equals("u_mail")) {
+					pstmt.setString(1, u.getuMail());
 				}
 				pstmt.setString(2, u.getuId());
 				
@@ -199,11 +201,143 @@ public class UserDAO extends DAO{
 		return result;	
 	}
 	
+	//회원 탈퇴 (강제, 자의)
+	public int deleteUser(String uId) {
+		int result = 0;
+		try {
+			conn();
+			String sql = "delete from users where u_id = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, uId);
+			result = pstmt.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			disconn();
+		}
+		return result;
+	}
+	
+	//회원 - 출석체크
+	public int attendCheck(Users u) {
+		int result = 0;
+		try {
+			conn();
+			String sql = "update users set u_attend = ? where u_id = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, u.getuAttend());
+			pstmt.setString(2, u.getuId());
+			result = pstmt.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			disconn();
+		}
+		return result;
+	}
+	
+	//회원 - 레벨업
+	public int gradeUp(Users u, String grade) {
+		int result = 0;
+		try {
+			conn();
+			String sql = "update users set u_grade = ? where u_id = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, grade);
+			pstmt.setString(2, u.getuId());
+			result = pstmt.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			disconn();
+		}
+		return result;
+	}
+	
+	//회원 - 명예의 전당(출석)
+	public Users[] fameAttend() {
+		Users[] list = new Users[3];
+		Users u = null;
+		try {
+			conn();
+			String sql = "select u_id, u_name, u_attend\n"
+					+ "from users\n"
+					+ "where u_attend != 0\n"
+					+ "order by u_attend desc;";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				for(int i=0; i<3; i++) {
+					u = new Users();
+					u.setuId(rs.getString("u_id"));
+					u.setuName(rs.getString("u_name"));
+					u.setuAttend(rs.getInt("u_attend"));
+					list[i] = u;
+				}
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			disconn();
+		}
+		return list;
+	}
+	
+	//회원 - 명예의 전당(글)
+	public Users famePost() {
+		Users u = null;
+		try {
+			conn();
+			String sql = "select u_id, u_name, u_post\n"
+					+ "from users\n"
+					+ "where u_post != 0\n"
+					+ "order by u_post desc;";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				u = new Users();
+				u.setuId(rs.getString("u_id"));
+				u.setuName(rs.getString("u_name"));
+				u.setuPost(rs.getInt("u_post"));
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			disconn();
+		}
+		return u;
+	}
+	//회원 - 명예의 전당(댓글)
+	public Users[] fameComment() {
+		Users[] list = new Users[3];
+		Users u = null;
+		try {
+			conn();
+			String sql = "select u_id, u_name, u_comment\n"
+					+ "from users\n"
+					+ "where u_comment != 0\n"
+					+ "order by u_comment desc;";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				for(int i=0; i<3; i++) {
+					u = new Users();
+					u.setuId(rs.getString("u_id"));
+					u.setuName(rs.getString("u_name"));
+					u.setuComment(rs.getInt("u_comment"));
+					list[i] = u;
+				}
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			disconn();
+		}
+		return list;
+	}
+	
 	//관리자 - 글 댓글 수정
 	
 	//관리자 - 글 댓글 삭제
-	
-	
-	//관리자 - 강제 탈퇴
 	
 }

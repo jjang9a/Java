@@ -127,24 +127,59 @@ public class UserService {
 	}
 		
 	//관리자 - 회원 정보 수정
-	
-	
-	
+	public void updateUser() {
+		Users u = new Users();
+		System.out.println("정보를 수정 할 ID > ");
+		u.setuId(sc.nextLine());
+		System.out.println("1.등급 변경 | 2.닉네임 변경");
+		int menu = Integer.parseInt(sc.nextLine());
+		String kind = null;
+		if(menu == 1) {
+			kind = "u_grade";
+			System.out.println(u.getuId()+"님의 현재 등급은 "+grade(u)+"("+u.getuGrade()+")입니다.");
+			System.out.print("변경 할 등급 > ");
+			u.setuGrade(sc.nextLine());
+		}else if(menu == 2) {
+			kind = "u_name";
+			System.out.println(u.getuId()+"님의 현재 등급은 "+u.getuName()+"입니다.");
+			System.out.println("변경 할 닉네임 > ");
+			u.setuName(sc.nextLine());
+		}
+		int result = UserDAO.getInstance().updateUser(kind, u);
+		
+		if(result == 0) {
+			System.out.println("회원 정보 수정 실패");
+		}else if(result == 3){
+			System.out.println("이미 존재하는 닉네임입니다");
+		}else {
+			System.out.println("회원 정보 수정 성공");
+		}
+	}
 	
 	//관리자 - 강제 탈퇴
-	
+	public void deleteUser() {
+		System.out.println("======회원 강제 탈퇴======");
+		System.out.println("탈퇴 처리 할 ID > ");
+		int result = UserDAO.getInstance().deleteUser(sc.nextLine());
+		
+		if(result > 0) {
+			System.out.println("강제 탈퇴 완료");
+		}else {
+			System.out.println("강제 탈퇴 실패");
+		}
+	}
 	
 	//회원 - 마이페이지
 	public void myPage() {
 		System.out.println("1.출석체크 | 2.등업신청 | 3.내 정보 조회 | 4.내 정보 수정 | 5.회원탈퇴");
-		System.out.print("이동을 원하는 메뉴를 입력하세요 > ");
+		System.out.println("이동을 원하는 메뉴를 입력하세요 > ");
 		int menu = Integer.parseInt(sc.nextLine());
 		switch(menu) {
 		case 1:
-			
+			attendCheck();
 			break;
 		case 2:
-			
+			gradeUp();
 			break;
 		case 3:
 			getMyInfo();
@@ -156,7 +191,6 @@ public class UserService {
 			delMyInfo();
 			break;
 		}
-		
 	}
 	
 	//회원 - 본인 정보 조회
@@ -178,6 +212,7 @@ public class UserService {
 		System.out.println("비밀번호를 입력하세요 > ");
 		String uPw = sc.nextLine();
 		String kind = null;
+		int result = 0;
 		if(userInfo.getuPw().equals(uPw)) {
 			System.out.println("1.비밀번호 변경 | 2.닉네임 변경 | 3.이메일 변경");	
 			System.out.println("입력 > ");
@@ -191,11 +226,11 @@ public class UserService {
 				if(sc.nextLine().equals(pw)) {
 					u.setuPw(pw);
 					
-					int result = UserDAO.getInstance().updateUser(kind, u);
+					result = UserDAO.getInstance().updateUser(kind, u);
 					if(result > 0) {
-						System.out.println("비밀번호 수정 완료");
+						System.out.println("비밀번호 변경 완료");
 					}else {
-						System.out.println("비밀번호 수정 실패");
+						System.out.println("비밀번호 변경 실패");
 					}	
 				}else {
 					System.out.println("비밀번호가 일치하지 않습니다.");
@@ -203,12 +238,31 @@ public class UserService {
 				break;
 			case 2 :
 				kind = "u_name";
+				System.out.println("현재 닉네임은 '"+u.getuName()+"'입니다.");
+				System.out.println("변경 할 닉네임 > ");
+				u.setuName(sc.nextLine());
+				result = UserDAO.getInstance().updateUser(kind, u);
+				if(result == 0) {
+					System.out.println("닉네임 변경 실패");
+				}else if(result == 3){
+					System.out.println("이미 존재하는 닉네임입니다");
+				}else {
+					System.out.println("닉네임 변경 성공");	
+				}
 				break;
 			case 3 : 
 				kind = "u_mail";
+				System.out.println("현재 메일주소는 '"+u.getuMail()+"'입니다.");
+				System.out.println("변경 할 메일주소 > ");
+				u.setuMail(sc.nextLine());
+				result = UserDAO.getInstance().updateUser(kind, u);
+				if(result > 0) {
+					System.out.println("메일 정보 수정 완료");
+				}else {
+					System.out.println("메일 정보 수정 실패");
+				}	
 				break;
 			}
-			
 		}else {
 			System.out.println("비밀번호가 일치하지 않습니다.");
 		}
@@ -219,14 +273,74 @@ public class UserService {
 		System.out.println("비밀번호를 입력하세요 > ");
 		String uPw = sc.nextLine();
 		if(userInfo.getuPw().equals(uPw)) {
-			System.out.println("정말로 우리를 떠나실건가요?ㅠ0ㅠ");	
+			System.out.println("정말로 우리를 떠나실건가요?ㅠ0ㅠ (Y/N)");
+			String yn = sc.nextLine();
+			if(yn.equals("y")||yn.equals("Y")) {
+				int result = UserDAO.getInstance().deleteUser(userInfo.getuId());
+				if(result > 0) {
+					userInfo = null;
+					System.out.println("감사합니다. 다음에 또 만나요!");
+				}
+			}else {
+				System.out.println("감사합니다. 앞으로도 잘 부탁 드려요!");
+			}
 		}else {
 			System.out.println("비밀번호가 일치하지 않습니다.");
 		}
 	}
 	
 	//회원 - 출석체크
-	
+	public void attendCheck() {
+		Users u = userInfo;
+		u.setuAttend(u.getuAttend()+1);
+		int result = UserDAO.getInstance().attendCheck(u);
+		if(result > 0) {
+			System.out.println(u.getuAttend()+"회 출석 완료되었습니다");
+		}else {
+			System.out.println("오류가 발생하였습니다 관리자에게 문의하세요.");
+		}
+	}
 	//회원 - 등급업
+	public void gradeUp() {
+		System.out.println("=========<<등급 기준>>==========");
+		System.out.println("	출석수	글 수     댓글수");
+		System.out.println("정회원    15회     10회     20회");
+		System.out.println("우수회원   50회     40회     50회");
+		System.out.println("특별회원   70회    100회    150회");
+		System.out.println("=============================");
+		Users u = userInfo;
+		String now = u.getuGrade();
+		int result = 0;
+		if(u.getuAttend() >= 70 && u.getuPost() >= 100 && u.getuComment() >= 150) {
+			if(!now.equals("b")) {
+				u.setuGrade("b");
+				result = UserDAO.getInstance().gradeUp(u, "b");
+			}
+		}else if(u.getuAttend() >= 50 && u.getuPost() >= 40 && u.getuComment() >= 50) {
+			if(!now.equals("c")) {
+				u.setuGrade("c");
+				result = UserDAO.getInstance().gradeUp(u, "c");
+			}
+		}else if(u.getuAttend() >= 15 && u.getuPost() >= 10 && u.getuComment() >= 20) {
+			if(!now.equals("d")) {
+				u.setuGrade("d");
+				result = UserDAO.getInstance().gradeUp(u, "d");
+			}
+		}
+		if(result > 0) {
+			System.out.println("레벨업을 축하합니다! '"+grade(u)+"'등급이 되었습니다.");
+		}else {
+			System.out.println("회원님의 현재 등급은 '"+grade(u)+"'입니다. 조건을 만족하시면 등급업이 가능합니다.");
+		}
+	}
+	
+	//회원 - 명예의 전당
+	public void fame() {
+		System.out.println("출석 랭킹 TOP3 !!!");
+		Users[] list = UserDAO.getInstance().fameAttend();
+		for(int i=0; i<list.length; i++) {
+			System.out.println((i+1)+"위 : "+list[i].getuName()+"("+list[i].getuId()+") 님");
+		}
+	}
 	
 }

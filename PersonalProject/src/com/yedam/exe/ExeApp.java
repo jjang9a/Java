@@ -105,7 +105,7 @@ public class ExeApp {
 	}
 
 	private void loginMenu() {
-		System.out.println("1.맛집 등록 게시판 | 2.우리동네맛집 | 3.메뉴검색 | 4.익명자유게시판 | 5.레시피게시판 | 6.건의게시판 | 7.마이페이지 | 8.명예의전당 | 9.로그아웃");
+		System.out.println("\n1.맛집 등록 게시판 | 2.우리동네맛집 | 3.메뉴검색 | 4.익명자유게시판 | 5.레시피게시판 | 6.건의게시판 | 7.마이페이지 | 8.명예의전당 | 9.로그아웃");
 		System.out.println("입력 > ");
 		menu = Integer.parseInt(sc.nextLine());
 		switch(menu) {
@@ -139,7 +139,7 @@ public class ExeApp {
 			break;
 		case 8 : 
 			//명예의 전당
-			
+			us.fame();
 			break;
 		case 9 :
 			//로그아웃
