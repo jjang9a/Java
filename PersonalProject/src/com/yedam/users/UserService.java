@@ -190,6 +190,9 @@ public class UserService {
 		case 5:
 			delMyInfo();
 			break;
+		default:
+			System.out.println("바르지 않은 명령어입니다.");
+			break;
 		}
 	}
 	
@@ -297,9 +300,30 @@ public class UserService {
 		if(result > 0) {
 			System.out.println(u.getuAttend()+"회 출석 완료되었습니다");
 		}else {
-			System.out.println("오류가 발생하였습니다 관리자에게 문의하세요.");
+			System.out.println("출석체크 중 오류가 발생하였습니다 관리자에게 문의하세요.");
 		}
 	}
+	
+	//회원 - 글 수
+	public void postCheck() {
+		Users u = userInfo;
+		u.setuPost(u.getuPost()+1);
+		int result = UserDAO.getInstance().postCheck(u);
+		if(result < 1) {
+			System.out.println("글 수 업데이트 중 오류가 발생하였습니다 관리자에게 문의하세요.");
+		}
+	}
+	
+	//회원 - 댓글 수
+	public void commentCheck() {
+		Users u = userInfo;
+		u.setuComment(u.getuComment()+1);
+		int result = UserDAO.getInstance().commentCheck(u);
+		if(result < 1) {
+			System.out.println("댓글 수 업데이트 중 오류가 발생하였습니다 관리자에게 문의하세요.");
+		}
+	}
+	
 	//회원 - 등급업
 	public void gradeUp() {
 		System.out.println("=========<<등급 기준>>==========");
@@ -328,7 +352,7 @@ public class UserService {
 			}
 		}
 		if(result > 0) {
-			System.out.println("레벨업을 축하합니다! '"+grade(u)+"'등급이 되었습니다.");
+			System.out.println("🎉레벨업을 축하합니다🎉 '"+grade(u)+"'등급이 되셨습니다.");
 		}else {
 			System.out.println("회원님의 현재 등급은 '"+grade(u)+"'입니다. 조건을 만족하시면 등급업이 가능합니다.");
 		}
@@ -336,11 +360,27 @@ public class UserService {
 	
 	//회원 - 명예의 전당
 	public void fame() {
-		System.out.println("출석 랭킹 TOP3 !!!");
-		Users[] list = UserDAO.getInstance().fameAttend();
-		for(int i=0; i<list.length; i++) {
-			System.out.println((i+1)+"위 : "+list[i].getuName()+"("+list[i].getuId()+") 님");
+		System.out.println("!!! 출석 랭킹 TOP3 !!!");
+		List<Users> list = UserDAO.getInstance().fameAttend();
+		for(int i=0; i<list.size(); i++) {
+			System.out.println((i+1)+"위 : "+list.get(i).getuName()+"("+guard(list.get(i).getuId())+")님 "+list.get(i).getuAttend()+"회");
 		}
+		System.out.println("!!! 글 랭킹 TOP3 !!!");
+		list = UserDAO.getInstance().famePost();
+		for(int i=0; i<list.size(); i++) {
+			System.out.println((i+1)+"위 : "+list.get(i).getuName()+"("+guard(list.get(i).getuId())+")님 "+list.get(i).getuPost()+"회");
+		}
+		System.out.println("!!! 댓글 랭킹 TOP3 !!!");
+		list = UserDAO.getInstance().famePost();
+		for(int i=0; i<list.size(); i++) {
+			System.out.println((i+1)+"위 : "+list.get(i).getuName()+"("+guard(list.get(i).getuId())+")님 "+list.get(i).getuComment()+"회");
+		}
+	}
+	
+	//정보보안
+	public String guard(String str) {
+		String result = "***" + str.substring(3);
+		return result;
 	}
 	
 }

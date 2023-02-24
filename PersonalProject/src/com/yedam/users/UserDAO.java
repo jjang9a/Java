@@ -236,6 +236,42 @@ public class UserDAO extends DAO{
 		return result;
 	}
 	
+	//회원 - 글 수 반영
+	public int postCheck(Users u) {
+		int result = 0;
+		try {
+			conn();
+			String sql = "update users set u_post = ? where u_id = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, u.getuPost());
+			pstmt.setString(2, u.getuId());
+			result = pstmt.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			disconn();
+		}
+		return result;
+	}
+	
+	//회원 - 댓글 수 반영
+	public int commentCheck(Users u) {
+		int result = 0;
+		try {
+			conn();
+			String sql = "update users set u_comment = ? where u_id = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, u.getuComment());
+			pstmt.setString(2, u.getuId());
+			result = pstmt.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			disconn();
+		}
+		return result;
+	}
+	
 	//회원 - 레벨업
 	public int gradeUp(Users u, String grade) {
 		int result = 0;
@@ -255,25 +291,26 @@ public class UserDAO extends DAO{
 	}
 	
 	//회원 - 명예의 전당(출석)
-	public Users[] fameAttend() {
-		Users[] list = new Users[3];
+	public List<Users> fameAttend() {
+		List<Users> list = new ArrayList<>();
 		Users u = null;
 		try {
 			conn();
-			String sql = "select u_id, u_name, u_attend\n"
-					+ "from users\n"
-					+ "where u_attend != 0\n"
-					+ "order by u_attend desc;";
-			pstmt = conn.prepareStatement(sql);
-			rs = pstmt.executeQuery();
-			while(rs.next()) {
-				for(int i=0; i<3; i++) {
-					u = new Users();
-					u.setuId(rs.getString("u_id"));
-					u.setuName(rs.getString("u_name"));
-					u.setuAttend(rs.getInt("u_attend"));
-					list[i] = u;
-				}
+			String sql = "select u.u_id, u.u_name, u.u_attend, u.att\r\n"
+					+ "from (\r\n"
+					+ "    select u_id, u_name, u_attend, RANK() OVER(ORDER BY u_attend desc) att\r\n"
+					+ "    from users\r\n"
+					+ "    )u\r\n"
+					+ "where u.att < 4 AND u_attend != 0\r\n";
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+
+			while(rs.next()){
+				u = new Users();
+				u.setuId(rs.getString("u_id"));
+				u.setuName(rs.getString("u_name"));
+				u.setuAttend(rs.getInt("u_attend"));
+				list.add(u);
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -284,49 +321,57 @@ public class UserDAO extends DAO{
 	}
 	
 	//회원 - 명예의 전당(글)
-	public Users famePost() {
+	public List<Users> famePost() {
+
+		List<Users> list = new ArrayList<>();
 		Users u = null;
 		try {
 			conn();
-			String sql = "select u_id, u_name, u_post\n"
-					+ "from users\n"
-					+ "where u_post != 0\n"
-					+ "order by u_post desc;";
-			pstmt = conn.prepareStatement(sql);
-			rs = pstmt.executeQuery();
-			if(rs.next()) {
+			String sql = "select u.u_id, u.u_name, u.u_post, u.att\r\n"
+					+ "from (\r\n"
+					+ "    select u_id, u_name, u_post, RANK() OVER(ORDER BY u_post desc) att\r\n"
+					+ "    from users\r\n"
+					+ "    )u\r\n"
+					+ "where u.att < 4 AND u_post != 0\r\n";
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+
+			while(rs.next()){
 				u = new Users();
 				u.setuId(rs.getString("u_id"));
 				u.setuName(rs.getString("u_name"));
 				u.setuPost(rs.getInt("u_post"));
+				list.add(u);
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
 			disconn();
 		}
-		return u;
+		return list;
 	}
+	
 	//회원 - 명예의 전당(댓글)
-	public Users[] fameComment() {
-		Users[] list = new Users[3];
+	public List<Users> fameComment() {
+		List<Users> list = new ArrayList<>();
 		Users u = null;
 		try {
 			conn();
-			String sql = "select u_id, u_name, u_comment\n"
-					+ "from users\n"
-					+ "where u_comment != 0\n"
-					+ "order by u_comment desc;";
-			pstmt = conn.prepareStatement(sql);
-			rs = pstmt.executeQuery();
-			if(rs.next()) {
-				for(int i=0; i<3; i++) {
-					u = new Users();
-					u.setuId(rs.getString("u_id"));
-					u.setuName(rs.getString("u_name"));
-					u.setuComment(rs.getInt("u_comment"));
-					list[i] = u;
-				}
+			String sql = "select u.u_id, u.u_name, u.u_comment, u.att\r\n"
+					+ "from (\r\n"
+					+ "    select u_id, u_name, u_comment, RANK() OVER(ORDER BY u_comment desc) att\r\n"
+					+ "    from users\r\n"
+					+ "    )u\r\n"
+					+ "where u.att < 4 AND u_comment != 0\r\n";
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+
+			while(rs.next()){
+				u = new Users();
+				u.setuId(rs.getString("u_id"));
+				u.setuName(rs.getString("u_name"));
+				u.setuComment(rs.getInt("u_comment"));
+				list.add(u);
 			}
 		}catch(Exception e) {
 			e.printStackTrace();

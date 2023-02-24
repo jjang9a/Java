@@ -2,11 +2,15 @@ package com.yedam.exe;
 
 import java.util.Scanner;
 
+import com.yedam.board.AnonyService;
+import com.yedam.store.StoreService;
 import com.yedam.users.UserService;
 
 public class ExeApp {
 	
 	UserService us = new UserService();
+	StoreService ss = new StoreService();
+	AnonyService as = new AnonyService();
 	Scanner sc = new Scanner(System.in);
 	int menu = 0;
 	boolean run = true;
@@ -78,7 +82,7 @@ public class ExeApp {
 				break;
 			case 3 :
 				//회원 정보 수정
-				
+				us.updateUser();
 				break;
 			case 4 :
 				//글, 댓글 수정
@@ -90,11 +94,14 @@ public class ExeApp {
 				break;
 			case 6 :
 				//강제 탈퇴
-				
+				us.deleteUser();
 				break;
 			case 7 :
 				//일반모드로 전환
 				loginMenu();
+				break;
+			default:
+				System.out.println("바르지 않은 명령어입니다.");
 				break;
 			}
 		}else if(menu == 2) {
@@ -110,20 +117,20 @@ public class ExeApp {
 		menu = Integer.parseInt(sc.nextLine());
 		switch(menu) {
 		case 1 :
-			//맛집 등록 게시판
-			
+			//맛집 게시판
+			ss.storeBoard();
 			break;
 		case 2 :
 			//우리동네 맛집
-			
+			ss.localStore();
 			break;
 		case 3 : 
 			//메뉴 검색
-			
+			ss.searchMenu();
 			break;
 		case 4 :
 			//익명 자유게시판
-			
+			as.anonyBoard();
 			break;
 		case 5 : 
 			//레시피 게시판
@@ -144,6 +151,9 @@ public class ExeApp {
 		case 9 :
 			//로그아웃
 			us.loguot();
+			break;
+		default:
+			System.out.println("바르지 않은 명령어입니다.");
 			break;
 		}
 	}
