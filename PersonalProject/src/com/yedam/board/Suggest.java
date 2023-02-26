@@ -14,15 +14,16 @@ public class Suggest {
 //	U_ID     NOT NULL VARCHAR2(30)  
 //	SU_ID    NOT NULL NUMBER(5)     
 	
-	String uId;
-	String uName;
+	private String uId;
+	private String uName;
 	
-	int suId;
-	Date suDate;
-	String suTitle;
-	String suBody;
+	private int suId;
+	private Date suDate;
+	private String suKind;
+	private String suTitle;
+	private String suBody;
 
-	String sucBody;
+	private String sucBody;
 
 	public String getuId() {
 		return uId;
@@ -78,6 +79,14 @@ public class Suggest {
 
 	public void setSucBody(String sucBody) {
 		this.sucBody = sucBody;
+	}
+
+	public String getSuKind() {
+		return suKind;
+	}
+
+	public void setSuKind(String suKind) {
+		this.suKind = suKind;
 	}
 	
 }

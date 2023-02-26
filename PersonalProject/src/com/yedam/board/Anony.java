@@ -15,16 +15,16 @@ public class Anony {
 //	AC_ID            NUMBER(5)     
 //	A_ID    NOT NULL NUMBER(5)
 	
-	String uId;
-	String uName;
+	private String uId;
+	private String uName;
 	
-	int aId;
-	Date aDate;
-	String aTitle;
-	String aBody;
+	private int aId;
+	private Date aDate;
+	private String aTitle;
+	private String aBody;
 
-	Date acDate;
-	String acBody;
+	private Date acDate;
+	private String acBody;
 	
 	public String getuId() {
 		return uId;

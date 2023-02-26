@@ -12,13 +12,13 @@ public class Recipe {
 //	R_ID NOT NULL NUMBER(5)    
 //	U_ID NOT NULL VARCHAR2(30) 
 	
-	String uId;
-	String uName;
+	private String uId;
+	private String uName;
 	
-	int rId;
-	Date rDate;
-	String rTitle;
-	String rBody;
+	private int rId;
+	private Date rDate;
+	private String rTitle;
+	private String rBody;
 	
 	public String getuId() {
 		return uId;

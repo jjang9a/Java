@@ -13,16 +13,17 @@ public class Store {
 //	U_ID       NOT NULL VARCHAR2(30)  
 //	u_name string
 	
-	int sId;
-	String sName;
-	String sKind;
-	String sMenu;
-	String sMoney;
-	String sLocation;
-	double sPoint;
-	String uId;
-	String uName;
-	Date sDate;
+	private int sId;
+	private String sName;
+	private String sKind;
+	private String sMenu;
+	private String sMoney;
+	private String sLocation;
+	private double sPoint;
+	private String uId;
+	private String uName;
+	private Date sDate;
+	private double sAvg;
 	
 	
 	public int getsId() {
@@ -85,5 +86,11 @@ public class Store {
 	public void setsDate(Date sDate) {
 		this.sDate = sDate;
 	}
-
+	public double getsAvg() {
+		return sAvg;
+	}
+	public void setsAvg(double sAvg) {
+		this.sAvg = sAvg;
+	}
+	
 }

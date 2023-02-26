@@ -36,25 +36,38 @@ public class UserService {
 		Users u = new Users();
 		
 		System.out.println("===회원 가입===");
-		System.out.println("아이디 > ");
-		u.setuId(sc.nextLine());
+		System.out.println("아이디(5자 이상) > ");
+		String id = sc.nextLine();
+		while(id.length()<5) {
+			System.out.println("아이디는 다섯자 이상이여야 합니다.");
+			System.out.println("아이디(5자 이상) > ");
+			id = sc.nextLine();
+		}
+		u.setuId(id);		
 		System.out.println("비밀번호 > ");
-		u.setuPw(sc.nextLine());
-		System.out.println("닉네임 > ");
-		u.setuName(sc.nextLine());
-		System.out.println("메일주소 > ");
-		u.setuMail(sc.nextLine());
-		
-		int result = UserDAO.getInstance().joinUser(u);
-		
-		if(result == 2) {
-			System.out.println("회원 가입 실패 : 이미 존재하는 ID입니다.");
-		}else if(result == 3) {
-			System.out.println("회원 가입 실패 : 이미 존재하는 닉네임입니다.");
-		}else if(result == 1) {
-			System.out.println("회원 가입 성공! 환영합니다~");
+		String pw = sc.nextLine();
+		System.out.println("비밀번호 확인 >");
+		if(pw.equals(sc.nextLine())) {
+			u.setuPw(pw);
+			
+			System.out.println("닉네임 > ");
+			u.setuName(sc.nextLine());
+			System.out.println("메일주소 > ");
+			u.setuMail(sc.nextLine());
+			
+			int result = UserDAO.getInstance().joinUser(u);
+			
+			if(result == 2) {
+				System.out.println("이미 존재하는 ID입니다.");
+			}else if(result == 3) {
+				System.out.println("이미 존재하는 닉네임입니다.");
+			}else if(result == 1) {
+				System.out.println("회원 가입 성공! 환영합니다~");
+			}else {
+				System.out.println("회원 가입 실패 문제가 지속되면 관리자에게 문의하세요.");
+			}
 		}else {
-			System.out.println("회원 가입 실패");
+			System.out.println("비밀번호가 일치하지 않습니다.");
 		}
 	}
 	
@@ -171,28 +184,33 @@ public class UserService {
 	
 	//회원 - 마이페이지
 	public void myPage() {
-		System.out.println("1.출석체크 | 2.등업신청 | 3.내 정보 조회 | 4.내 정보 수정 | 5.회원탈퇴");
-		System.out.println("이동을 원하는 메뉴를 입력하세요 > ");
-		int menu = Integer.parseInt(sc.nextLine());
-		switch(menu) {
-		case 1:
-			attendCheck();
-			break;
-		case 2:
-			gradeUp();
-			break;
-		case 3:
-			getMyInfo();
-			break;
-		case 4:
-			editMyInfo();
-			break;
-		case 5:
-			delMyInfo();
-			break;
-		default:
-			System.out.println("바르지 않은 명령어입니다.");
-			break;
+		int menu = 0;
+		while(menu != 6) {
+			System.out.println("1.출석체크 | 2.등업신청 | 3.내 정보 조회 | 4.내 정보 수정 | 5.회원탈퇴 | 6.뒤로가기");
+			System.out.println("이동을 원하는 메뉴를 입력하세요 > ");
+			menu = Integer.parseInt(sc.nextLine());
+			switch(menu) {
+			case 1:
+				attendCheck();
+				break;
+			case 2:
+				gradeUp();
+				break;
+			case 3:
+				getMyInfo();
+				break;
+			case 4:
+				editMyInfo();
+				break;
+			case 5:
+				delMyInfo();
+				break;
+			case 6:
+				break;
+			default:
+				System.out.println("바르지 않은 명령어입니다.");
+				break;
+			}
 		}
 	}
 	
