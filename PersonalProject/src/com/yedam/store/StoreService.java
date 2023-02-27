@@ -61,7 +61,15 @@ public class StoreService extends UserService{
 		System.out.println("위치(구) > ");
 		s.setsLocation(sc.nextLine());
 		System.out.println("평가 점수(10점 만점) > ");
-		s.setsPoint(Double.parseDouble(sc.nextLine()));
+		double point = Double.parseDouble(sc.nextLine());
+		if(point >= 0 && point <= 10) {
+			s.setsPoint(point);		
+		}else {
+			System.out.println("평가점수는 0~10 사이로 입력해주세요");
+			System.out.println("평가 점수(10점 만점) > ");
+			point = Double.parseDouble(sc.nextLine());
+			s.setsPoint(point);	
+		}
 		s.setuId(userInfo.getuId());
 		s.setuName(userInfo.getuName());	
 		

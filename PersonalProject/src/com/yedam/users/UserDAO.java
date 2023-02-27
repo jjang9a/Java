@@ -381,8 +381,4 @@ public class UserDAO extends DAO{
 		return list;
 	}
 	
-	//관리자 - 글 댓글 수정
-	
-	//관리자 - 글 댓글 삭제
-	
 }

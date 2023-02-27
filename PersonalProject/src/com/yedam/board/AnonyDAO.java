@@ -66,7 +66,11 @@ public class AnonyDAO extends DAO{
 		int result = 0;
 		try {
 			conn();
-			String sql = "delete from anony where a_id = ?";
+			String sql = "delete from anonycomm where a_id = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, a.getaId());
+			result = pstmt.executeUpdate();
+			sql = "delete from anony where a_id = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, a.getaId());
 			result = pstmt.executeUpdate();
@@ -79,16 +83,52 @@ public class AnonyDAO extends DAO{
 	}
 	
 	//익명자유게시판 - 댓글
-	
+	public List<Anony> listAnonyComm(int key){
+		List<Anony> list = new ArrayList<>();
+		Anony a = null;
+		try {
+			conn();
+			String sql = "select a.ac_date, a.ac_body, u_id, a.ac_id, a.a_id, u.u_name\r\n"
+					+ "from anonycomm a natural join users u\r\n"
+					+ "where a_id = ? \r\n"
+					+ "order by ac_id";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, key);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				a = new Anony();
+				a.setaId(rs.getInt("a_id"));
+				a.setuId(rs.getString("u_id"));
+				a.setAcBody(rs.getString("ac_body"));
+				a.setAcDate(rs.getDate("ac_date"));
+				a.setuName(rs.getString("u_name"));
+				list.add(a);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			disconn();
+		}
+		return list;
+	}
 	
 	//익명자유게시판 - 댓글달기
-	
-	//익명자유게시판 - 댓글삭제
-
-	
-	
-	
-	
-	
+	public int addAnonyComm(Anony a) {
+		int result = 0;
+		try {
+			conn();
+			String sql = "insert into anonycomm values (sysdate,?,?,anonycomm_seq.nextval,?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, a.getAcBody());
+			pstmt.setString(2, a.getuId());
+			pstmt.setInt(3, a.getaId());
+			result = pstmt.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			disconn();
+		}
+		return result;
+	}
 
 }

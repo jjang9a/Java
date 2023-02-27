@@ -20,6 +20,8 @@ public class Recipe {
 	private String rTitle;
 	private String rBody;
 	
+	private int rLike;
+	
 	public String getuId() {
 		return uId;
 	}
@@ -56,5 +58,11 @@ public class Recipe {
 	public void setrBody(String rBody) {
 		this.rBody = rBody;
 	}
-
+	public int getrLike() {
+		return rLike;
+	}
+	public void setrLike(int rLike) {
+		this.rLike = rLike;
+	}
+	
 }

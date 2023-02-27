@@ -378,18 +378,18 @@ public class UserService {
 	
 	//회원 - 명예의 전당
 	public void fame() {
-		System.out.println("!!! 출석 랭킹 TOP3 !!!");
+		System.out.println("-----✨✨ 출석 랭킹 TOP3 ✨✨-----");
 		List<Users> list = UserDAO.getInstance().fameAttend();
 		for(int i=0; i<list.size(); i++) {
 			System.out.println((i+1)+"위 : "+list.get(i).getuName()+"("+guard(list.get(i).getuId())+")님 "+list.get(i).getuAttend()+"회");
 		}
-		System.out.println("!!! 글 랭킹 TOP3 !!!");
+		System.out.println("-----✨✨ 글작성 랭킹 TOP3 ✨✨-----");
 		list = UserDAO.getInstance().famePost();
 		for(int i=0; i<list.size(); i++) {
 			System.out.println((i+1)+"위 : "+list.get(i).getuName()+"("+guard(list.get(i).getuId())+")님 "+list.get(i).getuPost()+"회");
 		}
-		System.out.println("!!! 댓글 랭킹 TOP3 !!!");
-		list = UserDAO.getInstance().famePost();
+		System.out.println("-----✨✨ 댓글 랭킹 TOP3 ✨✨-----");
+		list = UserDAO.getInstance().fameComment();
 		for(int i=0; i<list.size(); i++) {
 			System.out.println((i+1)+"위 : "+list.get(i).getuName()+"("+guard(list.get(i).getuId())+")님 "+list.get(i).getuComment()+"회");
 		}

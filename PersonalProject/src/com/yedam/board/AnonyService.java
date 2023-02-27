@@ -10,25 +10,27 @@ public class AnonyService extends UserService{
 	
 	Scanner sc = new Scanner(System.in);
 	List<Anony> list = new ArrayList<>();
+	Anony apost = new Anony();
 	
 	//익명자유게시판 - 목록
 	public void anonyBoard() {
 		int sel = 0;
 		while(sel != 4) {
-			list = AnonyDAO.getInstance().anonyList();
-			System.out.println(" 글번호      가게이름       작성자      작성일 ");
-			System.out.println("----------------------------------------");
-			for(int i=0; i<list.size(); i++) {
-				System.out.println("  "+(i+1)+"   "+list.get(i).getaTitle()+"	(익명)	"+list.get(i).getaDate());
-			}
-			System.out.println("----------------------------------------");
-			System.out.print("1.글쓰기 | 2.읽기 | 3.글 삭제 | 4.뒤로가기");
+		list = AnonyDAO.getInstance().anonyList();
+		System.out.println(" 글번호      제목       작성자     작성일 ");
+		System.out.println("----------------------------------------");
+		for(int i=0; i<list.size(); i++) {
+			System.out.println("  "+(i+1)+"   "+list.get(i).getaTitle()+"\t  (익명)  "+list.get(i).getaDate());
+		}
+		System.out.println("----------------------------------------");
+
+			System.out.print("1.글읽기 | 2.새글쓰기 | 3.글 삭제 | 4.뒤로가기");
 			sel = Integer.parseInt(sc.nextLine());
-			if(sel == 2) {
+			if(sel == 1) {
 				readAnony();
 			}else if(sel == 3) {
 				delAnony();
-			}else if(sel == 1){
+			}else if(sel == 2){
 				postAnony();
 			}else {
 				break;
@@ -67,16 +69,25 @@ public class AnonyService extends UserService{
 	
 	//익명자유게시판 - 글 읽기
 	public void readAnony() {
-		Anony a = new Anony();
+		apost = new Anony();
 		System.out.print("조회할 글 번호 > ");
 		int num = Integer.parseInt(sc.nextLine());
-		a = list.get(num-1);
-		System.out.println("=============================");
-		System.out.println(" 제목 : " +a.getaTitle());
-		System.out.println(" (익명)		"+a.getaDate());
+		apost = list.get(num-1);
+		System.out.println("====================================");
+		System.out.println(" 제목 : " +apost.getaTitle());
+		System.out.println(" (익명)		"+apost.getaDate());
 		System.out.println("-----------------------------");
-		System.out.println(" "+a.getaBody());
-		System.out.println("=============================");
+		System.out.println(apost.getaBody());
+		System.out.println("== ▼ 댓글 ============================");
+		List<Anony> listcomm = AnonyDAO.getInstance().listAnonyComm(apost.getaId());
+		for(int i=0; i<listcomm.size(); i++) {
+//			System.out.println("ㄴ "+listcomm.get(i).getAcBody()+"\t("+listcomm.get(i).getuName()+")");
+			System.out.println("ㄴ "+listcomm.get(i).getAcBody()+"\t(익명)");
+		}
+		System.out.println("------1.댓글작성---------2.뒤로가기------");
+		if(sc.nextLine().equals("1")) {
+			addAnonyComm();
+		}
 	}
 
 	//익명자유게시판 - 글 삭제
@@ -85,7 +96,7 @@ public class AnonyService extends UserService{
 		System.out.print("삭제할 글 번호 > ");
 		int num = Integer.parseInt(sc.nextLine());
 		a = list.get(num-1);
-		if(a.getuId().equals(userInfo.getuId())){
+		if(a.getuId().equals(userInfo.getuId()) || userInfo.getuGrade().equals("a")){
 			int result = AnonyDAO.getInstance().delAnony(a);
 			if(result>0) {
 				System.out.println("작성글이 삭제되었습니다.");
@@ -96,11 +107,20 @@ public class AnonyService extends UserService{
 			System.out.println("본인이 작성한 글만 삭제할 수 있습니다.");
 		}
 	}
-	
-	//익명자유게시판 - 댓글보기
-	
-	
+
 	//익명자유게시판 - 댓글달기
-	
-	//익명자유게시판 - 댓글삭제
+	public void addAnonyComm() {
+		Anony anony = new Anony();
+		anony.setuId(userInfo.getuId());
+		anony.setaId(apost.getaId());
+		System.out.println("댓글내용 >	");
+		anony.setAcBody(sc.nextLine());
+		int result = AnonyDAO.getInstance().addAnonyComm(anony);
+		if(result > 0) {
+			System.out.println("댓글 작성 완료");
+			commentCheck();
+		}else {
+			System.out.println("댓글 작성 실패. 오류가 지속되면 관리자에게 문의하세요.");
+		}
+	}
 }
