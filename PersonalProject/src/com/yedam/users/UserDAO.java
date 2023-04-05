@@ -235,6 +235,44 @@ public class UserDAO extends DAO{
 		}
 		return result;
 	}
+		
+	//출석수 카운트
+	public int attendCount(String id) {
+		int result = 0;
+		try {
+			conn();
+			String sql = "select count(distinct(to_char(att_date, 'yy/mm/dd'))) att\r\n"
+					+ "from attend_log\r\n"
+					+ "where u_id = ?\r\n"
+					+ "group by u_id";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result = rs.getInt("att");
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			disconn();
+		}
+		return result;
+	}
+	
+	//출석 로그 기록
+	public void attendLog(String id) {
+		try {
+			conn();
+			String sql = "insert into attend_log values (?,sysdate)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			disconn();
+		}
+	}
 	
 	//회원 - 글 수 반영
 	public int postCheck(Users u) {

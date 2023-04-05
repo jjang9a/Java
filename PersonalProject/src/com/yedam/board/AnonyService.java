@@ -18,11 +18,11 @@ public class AnonyService extends UserService{
 		while(sel != 4) {
 		list = AnonyDAO.getInstance().anonyList();
 		System.out.println(" 글번호      제목       작성자     작성일 ");
-		System.out.println("----------------------------------------");
+		System.out.println("--------------------------------------------------");
 		for(int i=0; i<list.size(); i++) {
 			System.out.println("  "+(i+1)+"   "+list.get(i).getaTitle()+"\t  (익명)  "+list.get(i).getaDate());
 		}
-		System.out.println("----------------------------------------");
+		System.out.println("--------------------------------------------------");
 
 			System.out.print("1.글읽기 | 2.새글쓰기 | 3.글 삭제 | 4.뒤로가기");
 			sel = Integer.parseInt(sc.nextLine());
@@ -41,9 +41,8 @@ public class AnonyService extends UserService{
 	//익명자유게시판 - 글 쓰기
 	public void postAnony() {
 		Anony anony = new Anony();
-		System.out.println("====글쓰기====");
 		anony.setuId(userInfo.getuId());
-		System.out.print("글 제목 > ");
+		System.out.print("\n글 제목 > ");
 		anony.setaTitle(sc.nextLine());
 		System.out.println("본문 >	(작성을 끝내시려면 '/완료' 를 입력하세요.)");
 		System.out.println("");
@@ -70,23 +69,28 @@ public class AnonyService extends UserService{
 	//익명자유게시판 - 글 읽기
 	public void readAnony() {
 		apost = new Anony();
+		int sel = 0;
 		System.out.print("조회할 글 번호 > ");
 		int num = Integer.parseInt(sc.nextLine());
 		apost = list.get(num-1);
-		System.out.println("====================================");
-		System.out.println(" 제목 : " +apost.getaTitle());
-		System.out.println(" (익명)		"+apost.getaDate());
-		System.out.println("-----------------------------");
-		System.out.println(apost.getaBody());
-		System.out.println("== ▼ 댓글 ============================");
-		List<Anony> listcomm = AnonyDAO.getInstance().listAnonyComm(apost.getaId());
-		for(int i=0; i<listcomm.size(); i++) {
-//			System.out.println("ㄴ "+listcomm.get(i).getAcBody()+"\t("+listcomm.get(i).getuName()+")");
-			System.out.println("ㄴ "+listcomm.get(i).getAcBody()+"\t(익명)");
-		}
-		System.out.println("------1.댓글작성---------2.뒤로가기------");
-		if(sc.nextLine().equals("1")) {
-			addAnonyComm();
+		while(sel != 2) {
+			System.out.println("=====================================================");
+			System.out.println(" 제목 : " +apost.getaTitle());
+			System.out.println(" (익명)		"+apost.getaDate());
+			System.out.println("-----------------------------------------------------");
+			System.out.println(apost.getaBody());
+			System.out.println("== ▼ 댓글 ==========================================");
+			List<Anony> listcomm = AnonyDAO.getInstance().listAnonyComm(apost.getaId());
+			for(int i=0; i<listcomm.size(); i++) {
+				System.out.println("ㄴ "+listcomm.get(i).getAcBody()+"\t(익명)");
+			}
+			System.out.println("\n-----------1.댓글작성----------2.뒤로가기------------");
+			sel = Integer.parseInt(sc.nextLine());
+			if(sel == 1) {
+				addAnonyComm();
+			}else {
+				break;
+			}
 		}
 	}
 

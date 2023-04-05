@@ -32,10 +32,9 @@ public class SuggestService extends UserService{
 	//건의게시판 - 글쓰기
 	public void postSug() {
 		Suggest gg = new Suggest();
-		System.out.println("====글쓰기====");
 		gg.setuId(userInfo.getuId());
 		gg.setuName(userInfo.getuName());
-		System.out.println("1.신고 | 2.건의 | 3.기타문의");
+		System.out.println("\n1.신고 | 2.건의 | 3.기타문의");
 		String mal = sc.nextLine();
 		if(mal.equals("1")) {
 			gg.setSuKind("신고");
@@ -79,12 +78,12 @@ public class SuggestService extends UserService{
 		int sel = 0;
 		while(sel != 3) {
 			list = SuggestDAO.getInstance().myfnqList(id);
-			System.out.println(" 글번호   종류   \t  제목   \t\t    작성자      작성일 ");
-			System.out.println("----------------------------------------------------");
+			System.out.println("글번호  종류\t  제목       작성자      작성일 \t처리상태 ");
+			System.out.println("---------------------------------------------------------------");
 			for(int i=0; i<list.size(); i++) {
-				System.out.println("  "+(i+1)+"   "+list.get(i).getSuKind()+"  "+list.get(i).getSuTitle()+"	 "+list.get(i).getuName()+"   "+list.get(i).getSuDate());
+				System.out.println("  "+(i+1)+"   "+list.get(i).getSuKind()+"  "+list.get(i).getSuTitle()+"	 "+list.get(i).getuName()+"   "+list.get(i).getSuDate()+"   "+countSuggestComm(list.get(i)));
 			}
-			System.out.println("----------------------------------------------------");
+			System.out.println("---------------------------------------------------------------");
 			System.out.print("1.글 읽기 | 2.글 삭제 | 3.뒤로가기");
 			sel = Integer.parseInt(sc.nextLine());
 			if(sel == 1) {
@@ -102,13 +101,13 @@ public class SuggestService extends UserService{
 		int sel = 0;
 		while(sel != 3) {
 			list = SuggestDAO.getInstance().fnqList();
-			System.out.println(" 글번호  종류   \t  제목       작성자      작성일  \t 처리상태 ");
-			System.out.println("--------------------------------------------------------");
+			System.out.println("글번호  종류\t  제목       작성자      작성일 \t처리상태 ");
+			System.out.println("---------------------------------------------------------------");
 			for(int i=0; i<list.size(); i++) {
 				System.out.println("  "+(i+1)+"   "+list.get(i).getSuKind()+"  "+list.get(i).getSuTitle()+" \t"
 						+list.get(i).getuName()+"   "+list.get(i).getSuDate()+"   "+countSuggestComm(list.get(i)));
 			}
-			System.out.println("--------------------------------------------------------");
+			System.out.println("---------------------------------------------------------------");
 			System.out.print("1.글 읽기 | 2.글 삭제 | 3.뒤로가기");
 			sel = Integer.parseInt(sc.nextLine());
 			if(sel == 1) {
@@ -124,23 +123,27 @@ public class SuggestService extends UserService{
 	//글읽기
 	private void readSuggest() {
 		ggpost = new Suggest();
-		while(true) {
-			System.out.print("조회할 글 번호 > ");
-			int num = Integer.parseInt(sc.nextLine());
-			ggpost = list.get(num-1);
-			System.out.println("====================================");
+		int sel = 0;
+		System.out.print("조회할 글 번호 > ");
+		int num = Integer.parseInt(sc.nextLine());
+		ggpost = list.get(num-1);
+		while(sel != 2) {
+			System.out.println("=====================================================");
 			System.out.println(" ["+ggpost.getSuKind()+"] "+ggpost.getSuTitle());
 			System.out.println(" "+ggpost.getuName()+"		"+ggpost.getSuDate());
-			System.out.println("-----------------------------");
+			System.out.println("-----------------------------------------------------");
 			System.out.println(" "+ggpost.getSuBody());
-			System.out.println("== ▼ 댓글 ============================");
+			System.out.println("== ▼ 댓글 ==========================================");
 			List<Suggest> listcomm = SuggestDAO.getInstance().listSuggestComm(ggpost.getSuId());
 			for(int i=0; i<listcomm.size(); i++) {
 				System.out.println("ㄴ "+listcomm.get(i).getSucBody()+"\t("+listcomm.get(i).getuName()+")");
 			}
-			System.out.println("------1.댓글작성---------2.뒤로가기------");
-			if(sc.nextLine().equals("1")) {
+			System.out.println("\n-----------1.댓글작성----------2.뒤로가기------------");
+			sel = Integer.parseInt(sc.nextLine());
+			if(sel == 1) {
 				addSuggestComm();
+			}else {
+				break;
 			}
 		}	
 	}

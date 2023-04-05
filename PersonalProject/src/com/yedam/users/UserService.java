@@ -22,7 +22,8 @@ public class UserService {
 			if(u.getuPw().equals(uPw)) {
 				System.out.println("로그인 완료.");
 				userInfo = u;
-				System.out.println(".₊̣̇.ෆ˟̑*̑˚̑*̑˟̑ෆ."+grade(userInfo)+" '"+UserService.userInfo.getuName()+"'님 환영합니다.ෆ˟̑*̑˚̑*̑˟̑ෆ.₊̣̇.");
+
+				System.out.println("☆♬○♩●♪♩"+grade(userInfo)+" '"+UserService.userInfo.getuName()+"'님 환영합니다.♩♪●♩○♬☆");
 			}else {
 				System.out.println("비밀번호가 일치하지 않습니다.");
 			}
@@ -35,11 +36,11 @@ public class UserService {
 	public void join() {
 		Users u = new Users();
 		
-		System.out.println("===회원 가입===");
+		System.out.println("♬♩♪♩*﹤　회원가입　﹥*♩♪♩♬");
 		System.out.println("아이디(5자 이상) > ");
 		String id = sc.nextLine();
 		while(id.length()<5) {
-			System.out.println("아이디는 다섯자 이상이여야 합니다.");
+			System.out.println("아이디는 5글자 이상이여야 합니다.");
 			System.out.println("아이디(5자 이상) > ");
 			id = sc.nextLine();
 		}
@@ -62,7 +63,7 @@ public class UserService {
 			}else if(result == 3) {
 				System.out.println("이미 존재하는 닉네임입니다.");
 			}else if(result == 1) {
-				System.out.println("회원 가입 성공! 환영합니다~");
+				System.out.println("♬♩♪♩*회원 가입 성공*♩♪♩♬ 환영합니다!");
 			}else {
 				System.out.println("회원 가입 실패 문제가 지속되면 관리자에게 문의하세요.");
 			}
@@ -73,7 +74,7 @@ public class UserService {
 	
 	//로그아웃
 	public void loguot() {
-		System.out.println("성공적으로 로그아웃 되었습니다.\n");
+		System.out.println("☆○o。 성공적으로 로그아웃 되었습니다 。o○☆\n");
 		userInfo = null;
 	}
 	
@@ -104,7 +105,7 @@ public class UserService {
 	//관리자 - 전체 회원 조회
 	public void getUserList() {
 		List<Users> list = UserDAO.getInstance().getUserList();
-		System.out.println(".₊̣̇.ෆ˟̑*̑˚̑*̑˟̑ෆ.₊̣̇.ෆ˟̑*̑˚̑*̑˟̑ෆ.₊̣̇.ෆ˟̑*̑˚̑*̑˟̑ෆ.₊̣̇.ෆ˟̑*̑˚̑*̑˟̑ෆ.₊̣̇");
+		System.out.println("★………★………★………★………★………★………★………★");
 		for(Users u : list) {
 			System.out.println(u.toString());
 		}
@@ -171,7 +172,7 @@ public class UserService {
 	
 	//관리자 - 강제 탈퇴
 	public void deleteUser() {
-		System.out.println("======회원 강제 탈퇴======");
+		System.out.println("========< 회원탈퇴　>========");
 		System.out.println("탈퇴 처리 할 ID > ");
 		int result = UserDAO.getInstance().deleteUser(sc.nextLine());
 		
@@ -217,6 +218,7 @@ public class UserService {
 	//회원 - 본인 정보 조회
 	public void getMyInfo() {
 		Users u = userInfo;
+		System.out.println("★………★………★………★………★………★………★………★");
 		System.out.println("회원 ID : "+u.getuId());
 		System.out.println("닉네임  : "+u.getuName());
 		System.out.println("메일주소 : "+u.getuMail());
@@ -268,7 +270,7 @@ public class UserService {
 				}else if(result == 3){
 					System.out.println("이미 존재하는 닉네임입니다");
 				}else {
-					System.out.println("닉네임 변경 성공");	
+					System.out.println("닉네임 변경 성공♡♥");	
 				}
 				break;
 			case 3 : 
@@ -300,10 +302,10 @@ public class UserService {
 				int result = UserDAO.getInstance().deleteUser(userInfo.getuId());
 				if(result > 0) {
 					userInfo = null;
-					System.out.println("감사합니다. 다음에 또 만나요!");
+					System.out.println("감사합니다♡♥ 다음에 또 만나요!");
 				}
 			}else {
-				System.out.println("감사합니다. 앞으로도 잘 부탁 드려요!");
+				System.out.println("감사합니다♡♥ 앞으로도 잘 부탁 드려요!");
 			}
 		}else {
 			System.out.println("비밀번호가 일치하지 않습니다.");
@@ -313,12 +315,20 @@ public class UserService {
 	//회원 - 출석체크
 	public void attendCheck() {
 		Users u = userInfo;
-		u.setuAttend(u.getuAttend()+1);
-		int result = UserDAO.getInstance().attendCheck(u);
-		if(result > 0) {
-			System.out.println(u.getuAttend()+"회 출석 완료되었습니다");
+		int att = UserDAO.getInstance().attendCount(u.getuId());
+		UserDAO.getInstance().attendLog(u.getuId());
+		int att2 = UserDAO.getInstance().attendCount(u.getuId());
+		if(att == att2) {
+			System.out.println("♧오늘 이미 출석체크를 하셨습니다.");
+			System.out.println("현재 출석수 : "+u.getuAttend()+"회");
 		}else {
-			System.out.println("출석체크 중 오류가 발생하였습니다 관리자에게 문의하세요.");
+			u.setuAttend(u.getuAttend()+1);
+			int result = UserDAO.getInstance().attendCheck(u);
+			if(result > 0) {
+				System.out.println("♧"+u.getuAttend()+"회 출석 완료되었습니다-`♡´-");
+			}else {
+				System.out.println("출석체크 중 오류가 발생하였습니다 관리자에게 문의하세요.");
+			}
 		}
 	}
 	
@@ -344,12 +354,12 @@ public class UserService {
 	
 	//회원 - 등급업
 	public void gradeUp() {
-		System.out.println("=========<<등급 기준>>==========");
-		System.out.println("	출석수	글 수     댓글수");
-		System.out.println("정회원    15회     10회     20회");
+		System.out.println("============< 등급 기준 >============");
+		System.out.println("	 출석수 	 글 수      댓글수");
+		System.out.println("정회원     15회     10회     20회");
 		System.out.println("우수회원   50회     40회     50회");
 		System.out.println("특별회원   70회    100회    150회");
-		System.out.println("=============================");
+		System.out.println("=====================================");
 		Users u = userInfo;
 		String now = u.getuGrade();
 		int result = 0;
@@ -370,25 +380,26 @@ public class UserService {
 			}
 		}
 		if(result > 0) {
-			System.out.println("🎉레벨업을 축하합니다🎉 '"+grade(u)+"'등급이 되셨습니다.");
+			System.out.println("☆★레벨업을 축하합니다☆★ '"+grade(u)+"'등급이 되셨습니다.\n");
 		}else {
-			System.out.println("회원님의 현재 등급은 '"+grade(u)+"'입니다. 조건을 만족하시면 등급업이 가능합니다.");
+			System.out.println("♧회원님의 현재 등급은 '"+grade(u)+"'입니다. 조건을 만족하시면 등급업이 가능합니다.\n");
+			System.out.println("현재 출석 수 : "+u.getuAttend()+"글 수 :"+u.getuPost()+"댓글 수"+u.getuComment());
 		}
 	}
 	
 	//회원 - 명예의 전당
 	public void fame() {
-		System.out.println("-----✨✨ 출석 랭킹 TOP3 ✨✨-----");
+		System.out.println("‥…━━━━━━━☆ 출석 랭킹 TOP3 ☆━━━━━━━…‥");
 		List<Users> list = UserDAO.getInstance().fameAttend();
 		for(int i=0; i<list.size(); i++) {
 			System.out.println((i+1)+"위 : "+list.get(i).getuName()+"("+guard(list.get(i).getuId())+")님 "+list.get(i).getuAttend()+"회");
 		}
-		System.out.println("-----✨✨ 글작성 랭킹 TOP3 ✨✨-----");
+		System.out.println("\n‥…━━━━━━━☆ 글작성 랭킹 TOP3 ☆━━━━━━━…‥");
 		list = UserDAO.getInstance().famePost();
 		for(int i=0; i<list.size(); i++) {
 			System.out.println((i+1)+"위 : "+list.get(i).getuName()+"("+guard(list.get(i).getuId())+")님 "+list.get(i).getuPost()+"회");
 		}
-		System.out.println("-----✨✨ 댓글 랭킹 TOP3 ✨✨-----");
+		System.out.println("\n‥…━━━━━━━☆ 댓글 랭킹 TOP3 ☆━━━━━━━…‥");
 		list = UserDAO.getInstance().fameComment();
 		for(int i=0; i<list.size(); i++) {
 			System.out.println((i+1)+"위 : "+list.get(i).getuName()+"("+guard(list.get(i).getuId())+")님 "+list.get(i).getuComment()+"회");

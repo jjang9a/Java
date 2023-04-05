@@ -26,8 +26,7 @@ public class StoreService extends UserService{
 	//맛집 글쓰기 기능
 	public void insertStore() {
 		Store s = new Store();
-		System.out.println("==추천할 맛집 등록==");
-		System.out.println("1.한식 2.양식 3.일식 4.중식(아시아식) 5.디저트 6.주점 7.퓨전");
+		System.out.println("\n1.한식 2.양식 3.일식 4.중식(아시아식) 5.디저트 6.주점 7.퓨전");
 		int sel = Integer.parseInt(sc.nextLine());
 		switch(sel) {
 			case 1:
@@ -91,11 +90,11 @@ public class StoreService extends UserService{
 		String select = null;
 		if(menu == 1) {
 			kind = "s_location";
-			System.out.println("중구 | 북구 | 수성구 | 달서구 | 남구 | 동구 | 서구 | 달성군 > ");
+			System.out.println("\n 중구 | 북구 | 수성구 | 달서구 | 남구 | 동구 | 서구 | 달성군 > ");
 			select = sc.nextLine();
 		}else {
 			kind = "s_kind";
-			System.out.println("1.한식 2.양식 3.일식 4.중식(아시아식) 5.디저트 6.주점 7.퓨전");
+			System.out.println("1.한식 | 2.양식 | 3.일식 | 4.중식(아시아식) | 5.디저트 | 6.주점 | 7.퓨전");
 			int sel = Integer.parseInt(sc.nextLine());
 			switch(sel) {
 				case 1:
@@ -121,11 +120,18 @@ public class StoreService extends UserService{
 					break;
 			}
 		}
-		System.out.println("!!! "+select + " 맛집 TOP5 !!!");
+		System.out.println("‥…━━━━━━━☆ "+select + " 맛집 TOP5 ☆━━━━━━━…‥");
 		list = StoreDAO.getInstance().rankStore(kind, select);
-		for(int i=0; i<list.size(); i++) {
-			System.out.println((i+1)+"위 : "+list.get(i).getsLocation()+"에 있는 "+list.get(i).getsKind()+" 전문점 '"
-					+list.get(i).getsName()+"' "+avgStar(list.get(i)));
+		if(list.size() < 5) {
+			for(int i=0; i<list.size(); i++) {
+				System.out.println((i+1)+"위 : "+list.get(i).getsLocation()+"에 있는 "+list.get(i).getsKind()+" 전문점 '"
+						+list.get(i).getsName()+"' "+avgStar(list.get(i)));
+			}
+		}else {
+			for(int i=0; i<5; i++) {
+				System.out.println((i+1)+"위 : "+list.get(i).getsLocation()+"에 있는 "+list.get(i).getsKind()+" 전문점 '"
+						+list.get(i).getsName()+"' "+avgStar(list.get(i)));
+			}
 		}
 	}
 	
@@ -183,7 +189,7 @@ public class StoreService extends UserService{
 		}
 		list = StoreDAO.getInstance().searchName(name);
 		for(int i=0; i<list.size(); i++) {
-			System.out.println("==========관련 게시글===========");
+			System.out.println("================ 관련 게시글 =================");
 			System.out.println(" 가게이름 : " +name);
 			System.out.println(" 글쓴이  : " +list.get(i).getuName());
 			System.out.println(" 게시일  : " +list.get(i).getsDate());
@@ -192,7 +198,7 @@ public class StoreService extends UserService{
 			System.out.println(" 가  격 : " +list.get(i).getsMoney());
 			System.out.println(" 위  치 : " +list.get(i).getsLocation());
 			System.out.println(" 점  수 : " +avgStar(list.get(i)));
-			System.out.println("=============================");
+			System.out.println("=============================================");
 		}
 	}
 	
@@ -202,13 +208,13 @@ public class StoreService extends UserService{
 		System.out.println("메뉴명 > ");
 		String menu = sc.nextLine();
 		list = StoreDAO.getInstance().searchMenu(menu);
-		System.out.println("=====해당 메뉴를 판매중인 가게 목록=====");
+		System.out.println("=========해당 메뉴를 판매중인 가게 목록=========");
 		for(int i=0; i<list.size(); i++) {
-			System.out.println("🍒 "+list.get(i).getsLocation()+"에 있는 "+list.get(i).getsKind()+" 전문점 '"
+			System.out.println("◈ "+list.get(i).getsLocation()+"에 있는 "+list.get(i).getsKind()+" 전문점 '"
 					+list.get(i).getsName()+"' ");
 		}
 		System.out.println("(레시피 게시판에 '"+menu+"'관련 게시글이 "+ StoreDAO.getInstance().searchMenuPlus(menu) +"건 존재합니다.)");
-		System.out.println("===============================");
+		System.out.println("============================================");
 		while(sel != 3) {
 			System.out.println("1.가게이름으로 검색 | 2.다른 메뉴 검색 | 3.뒤로가기");
 			sel = Integer.parseInt(sc.nextLine());
@@ -235,11 +241,11 @@ public class StoreService extends UserService{
 		while(sel != 3) {
 			list = StoreDAO.getInstance().storeList(id);
 			System.out.println(" 글번호      가게이름       작성자      작성일 ");
-			System.out.println("----------------------------------------");
+			System.out.println("-------------------------------------------------");
 			for(int i=0; i<list.size(); i++) {
 				System.out.println("  "+(i+1)+"   "+list.get(i).getsName()+"	 "+list.get(i).getuName()+"   "+list.get(i).getsDate());
 			}
-			System.out.println("----------------------------------------");
+			System.out.println("-------------------------------------------------");
 			System.out.print("1.글 읽기 | 2.글 삭제 | 3.뒤로가기");
 			sel = Integer.parseInt(sc.nextLine());
 			if(sel == 1) {
@@ -255,10 +261,10 @@ public class StoreService extends UserService{
 	//맛집게시판 글 읽기
 	public void readStore() {
 		Store s = new Store();
-		System.out.print("글 번호를 입력하세요 > ");
+		System.out.print("조회할 글 번호 > ");
 		int num = Integer.parseInt(sc.nextLine());
 		s = list.get(num-1);
-		System.out.println("=============================");
+		System.out.println("====================================");
 		System.out.println(" 가게이름 : " +s.getsName());
 		System.out.println(" 글쓴이  : " +s.getuName());
 		System.out.println(" 게시일  : " +s.getsDate());
@@ -267,13 +273,13 @@ public class StoreService extends UserService{
 		System.out.println(" 가  격 : " +s.getsMoney());
 		System.out.println(" 위  치 : " +s.getsLocation());
 		System.out.println(" 점  수 : " +avgStar(s));
-		System.out.println("=============================");
+		System.out.println("====================================");
 	}
 	
 	//맛집게시판 글 삭제
 	public void deleteStore() {
 		Store s = new Store();
-		System.out.print("삭제할 글 번호를 입력하세요 > ");
+		System.out.print("삭제할 글 번호 > ");
 		int num = Integer.parseInt(sc.nextLine());
 		s = list.get(num-1);
 		int result = StoreDAO.getInstance().deleteStore(s);

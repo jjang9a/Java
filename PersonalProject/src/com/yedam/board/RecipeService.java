@@ -17,12 +17,12 @@ public class RecipeService extends UserService{
 		int sel = 0;
 		while(sel != 5) {
 			list = RecipeDAO.getInstance().recipeList();
-			System.out.println(" 글번호      제목       작성자      작성일 ");
-			System.out.println("----------------------------------------");
+			System.out.println(" 글번호      제목         작성자       작성일 ");
+			System.out.println("----------------------------------------------------");
 			for(int i=0; i<list.size(); i++) {
-				System.out.println("  "+(i+1)+"   "+list.get(i).getrTitle()+"		"+list.get(i).getuName()+"  "+list.get(i).getrDate());
+				System.out.println("  "+(i+1)+"   "+list.get(i).getrTitle()+"\t		"+list.get(i).getuName()+"\t"+list.get(i).getrDate());
 			}
-			System.out.println("----------------------------------------");
+			System.out.println("----------------------------------------------------");
 			System.out.print("1.글읽기 | 2.새글쓰기 | 3.검색 | 4.글삭제 | 5.뒤로가기");
 			sel = Integer.parseInt(sc.nextLine());
 			switch(sel) {
@@ -47,10 +47,9 @@ public class RecipeService extends UserService{
 	//레시피 게시판 - 글 작성
 	public void postRecipe() {
 		Recipe re = new Recipe();
-		System.out.println("====글쓰기====");
 		re.setuId(userInfo.getuId());
 		re.setuName(userInfo.getuName());
-		System.out.print("글 제목 > ");
+		System.out.print("\n글 제목 > ");
 		title = sc.nextLine();
 		re.setrTitle(title);
 		System.out.println("본문 >	(작성을 끝내시려면 '/완료' 를 입력하세요.)");
@@ -84,13 +83,13 @@ public class RecipeService extends UserService{
 			int num = Integer.parseInt(sc.nextLine());
 			re = list.get(num-1);
 			int like = RecipeDAO.getInstance().countLike(re.getrId());
-			System.out.println("=============================");
+			System.out.println("============================================");
 			System.out.println(" 제목 : " +re.getrTitle());
-			System.out.println(" (익명)		"+re.getrDate());
-			System.out.println("-----------------------------");
+			System.out.println(" "+re.getuName()+"		"+re.getrDate());
+			System.out.println("--------------------------------------------");
 			System.out.println(" "+re.getrBody());
-			System.out.println("                   좋아요 "+ (like-1) +"개");
-			System.out.println("=============================");
+			System.out.println("                  \t   좋아요 "+ (like-1) +"개");
+			System.out.println("============================================");
 			System.out.print("1.♥좋아요누르기♥ 2.뒤로가기");
 			if(Integer.parseInt(sc.nextLine()) == 1) {
 				int result = RecipeDAO.getInstance().addLike(re.getrId(), userInfo.getuId());
@@ -119,12 +118,12 @@ public class RecipeService extends UserService{
 		}
 		int sel = 0;
 		while(sel != 2) {
-			System.out.println(" 글번호      가게이름       작성자      작성일 ");
-			System.out.println("----------------------------------------");
+			System.out.println(" 글번호       제목        작성자      작성일 ");
+			System.out.println("----------------------------------------------------");
 			for(int i=0; i<list.size(); i++) {
 				System.out.println("  "+(i+1)+"   "+list.get(i).getrTitle()+"		"+list.get(i).getuName()+"  "+list.get(i).getrDate());
 			}
-			System.out.println("----------------------------------------");
+			System.out.println("----------------------------------------------------");
 			System.out.println("1.글읽기 | 2.글삭제 | 3.뒤로가기");
 			sel = Integer.parseInt(sc.nextLine());
 			if(sel == 1) {

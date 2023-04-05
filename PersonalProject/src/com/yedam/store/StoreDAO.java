@@ -51,7 +51,7 @@ public class StoreDAO extends DAO{
 					+ "    from store\n"
 					+ "    group by s_name, s_kind, s_location\n"
 					+ "    )s\n"
-					+ "where s.att < 6 AND "+kind+" = ? ";
+					+ "where "+kind+" = ? ";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, sel);
 			rs = pstmt.executeQuery();

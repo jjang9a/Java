@@ -40,7 +40,7 @@ public class ExeApp {
 	}
 	
 	private void logoutMenu() {
-		System.out.println("1.로그인 🍭 | 2.회원가입 🍭 | 3.나가기 🍭");
+		System.out.println("1.로그인♧ | 2.회원가입♧ | 3.나가기♧ ");
 		System.out.println("원하시는 서비스를 입력해주세요 > ");
 		menu = Integer.parseInt(sc.nextLine());
 		if(menu == 1) {
@@ -53,7 +53,7 @@ public class ExeApp {
 			
 		}else {
 			run = false;
-			System.out.println("또 만나요! (*ˊᗜˋ*)/ᵗᑋᵃᐢᵏ ᵞᵒᵘ*");
+			System.out.println("또 만나요! (*^▽^*)/ thank you!");
 		}
 		
 	}

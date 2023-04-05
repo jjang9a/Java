@@ -71,7 +71,7 @@ public class Users {
 	}
 	@Override
 	public String toString() {
-		return "😊 [Id : " + uId + ", Pw : " + uPw + ", 닉네임 : " + uName + ", Email : " + uMail + ", 가입일자 : " + uDate
+		return "☞ [Id : " + uId + ", Pw : " + uPw + ", 닉네임 : " + uName + ", Email : " + uMail + ", 가입일자 : " + uDate
 				+ ", 등급 : " + uGrade + ", 출석횟수 : " + uAttend + ", 글 수 : " + uPost + ", 댓글수 : " + uComment + "]";
 	}
 
